@@ -1,36 +1,20 @@
-console.log("Hi! I am Bonbon. Nice to meet you!");
-
 var Twit = require('twit');
 var config = require('./config'); //Twitter API keys
+var tweetit = require ('./tweetit'); 
+var messages = require ('./messages');
 
 var T = new Twit(config);
-
-setting up a user stream
+//setting up a user stream
 var stream = T.stream('user');
 
-//Anytime someone follows me
-stream.on('follow', followed);
+//Sends @mention to new followers
+stream.on('follow', tweetit.thanksForFollow);
 
-function followed(eventMsg){
-	var name = eventMsg.source.name;
-	var screenName = eventMsg.source.screen_name;
-	tweetIt("@" + screenName + " you're awesome!" );
-	console.log(screenName + " is now following Bonbon.")
-}
+//Sends a quote every 47 min
+tweetit.sendQuote();
+setInterval(sendQuote, 1000*60*47);
 
-function tweetIt(txt){
-	var tweet = {
-		status: txt, 
-	};
+//Sends @mention to one of my followers every 6 hours
+tweetit.tweetAtFollower();
+setInterval(sendQuote, 1000*60*60*6);
 
-	T.post('statuses/update', tweet, tweeted);
-
-	function tweeted (err, data, response) {
-	  if (err){
-	  	console.log("Something went wrong!");
-	  }
-	  else{
-	  	console.log("it worked!");
-		}
-	};
-}
