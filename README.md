@@ -1,7 +1,7 @@
 # BonbonTwitterBot
 Bonbon, the Wholesome Bear Twitter Bot - @bonbon_47
 
-###Concept
+##### Concept
 To create a twitter bot that:
 
 - Tweets motivational quotes a few times a day.
