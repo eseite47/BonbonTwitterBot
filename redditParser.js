@@ -1,4 +1,5 @@
 var fetch = require('node-fetch')
+var tweetit = require('./tweetit');
 
 let awwData = {};
 let newTweet = ''
@@ -17,13 +18,14 @@ const getData = function(){
     awwData.title = data.data.children[random].data.title
     awwData.img = data.data.children[random].data.url
     //console.log('test', awwData)
-    newTweet = `This is so cute! From reddit : '` + awwData.title + `' `  + awwData.img
+    newTweet = `This is so cute! '` + awwData.title + `' `  + awwData.img
     console.log('newTweet', newTweet)
+    tweetit.tweetIt(newTweet)
   })
   .catch()
   //return awwData
 }
 
-getData()
+//getData()
 
-module.exports.redditData = getData
+module.exports = getData
